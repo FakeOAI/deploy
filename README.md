@@ -3,13 +3,12 @@
 一个通过绕过 `Cloudflare` 防御代理 `OpenAI` 官网接口的服务。
 
 `FakeOpenAI` 旨意为假的 `OpenAI`，但是由于对国人使用不太友好，为了降低ChatGPT官网的使用门槛，我把它接入微信体系中。
-大家可能关注我的公众号获取动态码登录，也可以点击底下的微信扫码直接登录，**无需科学上网，无需你有 ChatGPT 账号即可体验**
+大家可以关注我的公众号获取**动态码登录**，也可以点击底下的**微信扫码直接登录**，**无需科学上网**，**无需你有 ChatGPT 账号**即可体验
 
 这个是 FakeOpenAI 的官网地址：https://chat.fakeopenai.cn
 
 <img width="1532" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/021fd43f-649d-4cce-baa3-2e1ec79231a5">
 <img width="1803" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/e60fffe0-3a26-4473-9f22-f9df79dbce4e">
-
 
 ## 你们可能的疑惑🤨
 
@@ -21,4 +20,8 @@
 ### 2. 代理服务、或者源代码为啥不开源？
 
 因为我也不知道你是否是 OpenAI 官方维护人，为了能让服务长久的持续下去，就不公开代码了。
+
+### 3. 能不能像 `Pandxxxx` 项目一样提供对外开放代理服务的接口？
+
+理论是可以，但是需要开发是需要一定的时间，你们的 `Star✨` 才是我开发的动力。
 
