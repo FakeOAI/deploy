@@ -20,6 +20,15 @@
 <img width="1532" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/021fd43f-649d-4cce-baa3-2e1ec79231a5">
 <img width="1803" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/e60fffe0-3a26-4473-9f22-f9df79dbce4e">
 
+
+
+## 如何订阅ChatGPT Plus会员
+
+如果想使用GPT-4模型，直接点击订阅即可，价格为**20块/月**，在【元宝程序员】公众号上可以查询具体的到期时间。
+<img width="1625" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/ed774b64-4680-4a7d-a623-4c41fdca711f">
+<img width="1625" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/7bd5af66-37ca-4c6c-8d25-db15acd0cf31">
+<img width="1732" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/2390a99a-ec50-4d84-8eaa-1e8b99ea1ca8">
+
 ## 你们可能的疑惑🤨
 
 ### 1. 服务是否稳定？
