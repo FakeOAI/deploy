@@ -49,8 +49,13 @@
 基于目前gpt-4的bug情况，我们对使用的**gpt-4模型**进行了修改，现阶段是**无限制的使用**gpt-4模型，如果官网维护了此bug可能就有所调整，但是 20 美刀换成 20 块人民币即可体验 GPT
 4，我已经帮你们把价格打下来了，至于你们是否上车，取决于你是否真的需要 `GPT4` 模型。
 
+如下图是两个账号同时发送请求的结果，已经超过50条了，但是还是可以继续发送的
+<img width="1122" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/470a6249-1e0d-413c-b261-e637326231b3">
+<img width="1055" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/2ed6b88e-8a3c-43ea-a193-903ae23abb15">
+
 ## 问题反馈
 
 这是一个微信群聊，在里面可以咨询任何使用过程中遇到的问题
 ![image](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/5d4af157-64ea-4f57-93d8-ab8179a037ec)
+
 
