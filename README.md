@@ -1,7 +1,7 @@
 # FakeOpenAI
 
 > [!IMPORTANT]
-> 一个通过绕过 `Cloudflare` 防御代理 `OpenAI` 官网接口的服务。
+> 一个通过绕过 `Cloudflare` 防御代理实现微信扫码 / 公众号登录即可体验 `ChatGPT` 的服务。
 > [官网地址](https://chat.fakeopenai.cn) | [服务监控](https://status.fakeopenai.cn)
 
 `FakeOpenAI` 旨意为假的 `OpenAI`，但是由于它对国人使用不太友好，使用我干脆把它接入微信体系中。
