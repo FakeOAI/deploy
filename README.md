@@ -54,6 +54,10 @@
 <img width="1122" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/470a6249-1e0d-413c-b261-e637326231b3">
 <img width="1055" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/2ed6b88e-8a3c-43ea-a193-903ae23abb15">
 
+### 5. 可以支持使用自己的ChatGPT账号进行登录吗？
+
+不可以，这也是我为啥使用想把它整合到微信体系当中，因为ChatGPT使用了 `arkoselabs` 服务进行一个人机识别，一旦提供登录服务，前端就会暴露很多请求的接口，他们官方人员就是快速的修复其中的bug，这也是为啥这么快被封杀的原因。
+
 ## 问题反馈
 
 这是一个微信群聊，在里面可以咨询任何使用过程中遇到的问题
