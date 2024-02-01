@@ -2,7 +2,8 @@
 
 > [!IMPORTANT]
 > 一个通过绕过 `Cloudflare` 防御代理实现微信扫码 / 公众号登录即可体验 `ChatGPT` 的服务。
-> [官网地址](https://chat.fakeopenai.cn) | [服务监控](https://status.fakeopenai.cn)
+> 
+> 相关链接🔗：[官网地址](https://chat.fakeopenai.cn) | [服务监控](https://status.fakeopenai.cn)
 
 `FakeOpenAI` 旨意为假的 `OpenAI`，但是由于它对国人使用不太友好，使用我干脆把它接入微信体系中。
 大家可以关注我的公众号【元宝程序员】获取**动态码登录**，也可以点击底下的**微信扫码直接登录**，**无需科学上网**，**无需你有 ChatGPT 账号**即可体验
