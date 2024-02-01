@@ -59,6 +59,12 @@
 
 不可以，这也是我为啥使用想把它整合到微信体系当中，一方面最大的程度阻碍他们官方人员登录测试(他们应该没有人用微信吧😅)，另一方面因为ChatGPT使用了 `arkoselabs` 服务进行一个人机识别，一旦提供登录服务，前端就会暴露很多请求的接口，他们官方人员就是快速的修复其中的bug，这也是为啥这么快被封杀的原因。
 
+### 6. The previous model used in this conversation is unavailable. We've switched you to the latest default model.是什么报错？
+
+说明当前GPT4模型已经超过调用额度，自动为你切换GPT-4无限调用的模型♥
+<img width="770" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/b7ae5668-2608-4395-a956-c2fca551b365">
+
+
 ## 问题反馈
 
 这是一个微信群聊，在里面可以咨询任何使用过程中遇到的问题
