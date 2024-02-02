@@ -68,6 +68,6 @@
 ## 问题反馈
 
 这是一个微信群聊，在里面可以咨询任何使用过程中遇到的问题
-![image](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/5d4af157-64ea-4f57-93d8-ab8179a037ec)
+![image](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/654a87a8-0055-4346-bc05-11facb0b44a9)
 
 
