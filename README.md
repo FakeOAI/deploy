@@ -64,6 +64,12 @@
 说明当前GPT4模型已经超过调用额度，自动为你切换GPT-4无限调用的模型♥
 <img width="770" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/b7ae5668-2608-4395-a956-c2fca551b365">
 
+### 7. "致敬的用户，请您稍安勿躁，这不是Bug，只是由于服务器压力过大，稍等片刻重试即可"，这是什么问题？
+
+由于底层逻辑还是几个账户维持着你们的对话服务，如果出现此类错误请等待10-20分钟即可继续。
+
+<img width="1363" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/7dbd7b64-7303-416c-84b1-f059c556c47a">
+
 
 ## 问题反馈
 
