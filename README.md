@@ -67,7 +67,7 @@
 
 ## 问题反馈
 
-这是一个微信群聊，在里面可以咨询任何使用过程中遇到的问题
+这是一个QQ群聊，在里面可以咨询任何使用过程中遇到的问题
 ![image](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/c32c68f8-e419-45a1-a998-4463c7dbd4e5)
 
 
