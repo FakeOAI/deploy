@@ -78,6 +78,16 @@
 
 ![image](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/ba8ce061-bbfa-4d73-bca5-d9b1f495155a)
 
+## 贡献者们
+
+> 感谢这个项目的贡献者
+
+[![Contributors](https://contrib.rocks/image?repo=fakeopenai/fakeopenai)](https://github.com/fakeopenai/fakeopenai/graphs/contributors)
+
+## Star历史
+
+![Star History Chart](https://api.star-history.com/svg?repos=fakeopenai/fakeopenai&type=Date)
+
 
 
 
