@@ -17,8 +17,8 @@
 - 支持文件、照片、数据等分析
 - 支持联网搜索对话
 - `ChatGPT3.5模型` 完全**免费无限制**的使用
-- 历史记录暂不支持储存记录（由于OpenAI官方把对话的流式传输SSE换成WSS长连接协议，现在目前还找不到解决方案储存对话的历史记录，还在加急寻找中...）
-- 不支持`Custom Instructions`，因为已经用于优化自动回复中文了
+- **历史记录暂不支持储存记录**（由于OpenAI官方把对话的流式传输SSE换成WSS长连接协议，现在目前还找不到解决方案储存对话的历史记录，还在加急寻找中...）
+- 不支持`Custom Instructions`，因为该自定义指令是官方会携带在每次对话的内置消息中，无法做到用户级别开放出来使用，所以已经用于优化自动回复中文了。
 
 <img width="1532" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/021fd43f-649d-4cce-baa3-2e1ec79231a5">
 <img width="1803" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/e60fffe0-3a26-4473-9f22-f9df79dbce4e">
