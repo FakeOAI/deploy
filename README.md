@@ -80,7 +80,11 @@
 
 ### 9. 账号被封？
 
-一分钟请求超过6条的自动拉进黑名单，永久封禁，不管你是不是Plus会员。公共服务请为他人着想。
+一分钟请求超过5条有效成功对话请求的账号，我们会给予警告，24小时之后此才会解除警告，如果在24小时之内再次超过5次有效成功对话请求，我们会毫不留情的直接给予账号永久封禁。不管你是不是Plus会员。公共服务请为他人着想。
+
+<img width="570" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/fed2300c-9bdc-46cf-a1ca-5791769661c8">
+
+<img width="375" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/0818d048-48ce-48c0-92cb-af638febe671">
 
 ![9198e9ab76452e1b62ee9341f627a19c](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/9410979e-dbc4-4b7d-8ae5-76ea30ee325a)
 
