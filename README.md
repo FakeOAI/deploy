@@ -78,6 +78,16 @@
 
 如何解决：**当你继续聊天的时候**，你会发现以前的聊天记录会 `自动加载` 出来。
 
+### 9. 账号被封？
+
+一分钟请求超过6条的自动拉进黑名单，永久封禁，不管你是不是Plus会员。公共服务请为他人着想。
+
+![9198e9ab76452e1b62ee9341f627a19c](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/9410979e-dbc4-4b7d-8ae5-76ea30ee325a)
+
+![caf6bd18673db455072e12c25b5ea42a](https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/9b29f72d-928a-4b53-8e07-a131c4e41082)
+
+
+
 
 ## 问题反馈
 
