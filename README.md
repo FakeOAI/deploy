@@ -1,7 +1,7 @@
 # FakeOAI
 
 > [!IMPORTANT]
-> `FakeOAI` 是一个可以让你本地化部署 ChatGPT 官网，并且保持与官网一样的体验。
+> `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
 
 ## 镜像服务
 
@@ -300,14 +300,15 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
 这里是 TG 群聊和 QQ 群聊，在里面可以咨询任何使用过程中遇到的问题
 
-<img src="https://github.com/fakeoai/deploy/assets/89441249/ba8ce061-bbfa-4d73-bca5-d9b1f495155a" width="40%" />
-<img src="https://github.com/fakeoai/deploy/assets/89441249/45fb6fae-7da7-4248-ba2e-426475a2ab69" width="40%" />
+<img src="https://github.com/FakeOAI/deploy/assets/89441249/9e759a50-95c5-4ac9-bbe1-0ffb115a7e2a" width="30%" />
+
+<img src="https://github.com/FakeOAI/deploy/assets/89441249/b5ca86f2-6999-478d-bdcc-af1c49659670" width="30%" />
 
 ## 贡献者们
 
 > 感谢这个项目的贡献者
 >
-> [![Contributors](https://contrib.rocks/image?repo=fakeoai/deploy)](https://github.com/fakeoai/deploy/graphs/contributors)
+> ![contrib](https://contrib.rocks/image?repo=fakeoai/deploy)
 > 
 > 感谢 [xyhelper](https://github.com/xyhelper) 提供的 `arkoselabs` 免费的代理服务
 
