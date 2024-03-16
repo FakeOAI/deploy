@@ -1,111 +1,316 @@
-# FakeOpenAI
+# FakeOAI
 
 > [!IMPORTANT]
-> 一个通过绕过 `Cloudflare` 防御代理实现微信扫码 / 公众号登录即可体验 `ChatGPT` 的服务。
->
-> 相关链接 🔗：[Fake 官网地址](https://chat.fakeopenai.cn) | [服务监控地址](https://status.fakeopenai.cn)
+> `FakeOAI` 是一个可以让你本地化部署 ChatGPT 官网，并且保持与官网一样的体验。
 
-## 项目介绍
+## 镜像服务
 
-`FakeOpenAI` 旨意为假的 `OpenAI`，但是由于它对国人使用不太友好，使用我干脆把它整合到微信用户体系中。
-大家可以关注公众号【FakeOAI】进行**一键登录**，也可以直接**微信扫码登录**，**无需科学上网**，**无需你有 ChatGPT 账号**即可体验
+登录方式：
+
+- 使用自己的 `OpenAI` 账号密码进行登录
+- 使用 `fk-token` 进行登录
 
 功能的支持包括但不限于以下：
 
 - 第一时间体验 OpenAI 的功能，与 OpenAI 官网保持一致的体验
-- 无需科学上网，微信登录即可
 - 对话隔离，他人无法查看你的对话内容，保护您的隐私
 - `GPTs隔离`，他人无法查看你创建的 GPTs
 - 支持 `ChatGPT` 插件
 - 支持 `GPTs` 商店
 - 支持文件、照片、数据等分析
 - 支持联网搜索对话
-- `ChatGPT3.5模型` 完全**免费无限制**的使用
-- 不支持`Custom Instructions`，因为该自定义指令是官方会携带在每次对话的内置消息中，无法做到用户级别开放出来使用。
+- 支持自定义网站提供者等信息，默认为 `FakeOAI` 的项目信息
 
-## 使用教程
+### 准备
 
-### 登录
+在服务器或者本地的命令行中执行以下脚本，进行调用凭证的【IP 授权】
 
-为了能够让国人无门槛的体验ChatGPT，本项目把它接入微信账号体系当中，只要你拥有一个微信号即可体验ChatGPT服务。
+```sh
+curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
+```
 
-登录方式有**微信公众号扫码登录**以及**公众号菜单一键登录**两种方式。
-- 微信公众号扫码登录（推荐**电脑端用户**使用）
+### 本地运行
 
-<img width="1026" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/78fac921-cd4e-4bba-890b-542aacac385c">
+- 编辑修改 `.env` 环境变量文件
 
+  ```  
+  FLASK_SECRET_KEY=Session信息密钥
+  FLASK_SESSION_COOKIE_SECURE=是否开启cookie的secure模式
+  FLASK_LICENSE=你的调用凭证
+  FLASK_MANAGER=网站提供者
+  FLASK_SOCIAL_LINK=提供者的社交链接🔗
+  FLASK_NAVIGATE_LINK_LABEL=链接显示的文字
+  ```
 
-- 公众号菜单一键登录（推荐**手机端用户**使用）
+- 配置 Nginx 代理
 
-<img width="746" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/b0cdb647-b5d5-4824-af92-9f5c9113be98">
+  ```conf
+  server {
+      listen 8080;
 
-### 界面介绍
+      # 镜像官网代理
+      location / {
+          proxy_pass http://localhost:8000;
+      }
 
-#### 普通用户的界面
+      # 文件图片资源代理
+      location /files {
+          proxy_ssl_server_name on;
+          proxy_ssl_session_reuse off;
+          rewrite ^/files(.*)$ /$1 break;
+          proxy_pass https://files.oaiusercontent.com;
+      }
 
-<img width="1673" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/66842ab3-cfec-4a39-984a-596c4a477ad0">
+      # API服务代理
+      location ~ ^/(((backend|public)-(api|anon))|api|auth|css|js|fonts)/ {
+          rewrite ^/(.*)$ /$1 break;
+          proxy_ssl_server_name on;
+          proxy_ssl_session_reuse off;
+          proxy_pass https://api.fakeoai.com;
+          proxy_set_header X-License API调用凭证;
+          # proxy_set_header X-Secret-Key fakeoai;
+          # proxy_set_header X-Manager FakeOAI;
+          # proxy_set_header X-Social-Link https://github.com/FakeOAI/deploy;
+          # proxy_set_header X-Secure false;
+      }
+  }
+  ```
 
-<img width="1677" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/edfdcdcc-bd05-493f-93d2-d16943f4c8d8">
+- 启动
 
-<img width="1675" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/e157bc3b-4e6d-42c0-9450-f49f4d98c8b6">
+  - 以 `python` 脚本启动, 默认 8000 端口
 
-#### 会员用户的界面
+    ```sh
+    python3 launch.py
+    ```
 
-<img width="1676" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/10ea49b9-4e02-44fa-911e-f2b70ebfbfa7">
+  - 以 `gunicorn` 服务器启动
 
-### 如何订阅会员
+    ```sh
+    gunicorn launch:app
+    ```
 
-订阅会员是需要在**电脑端浏览器**或者**手机浏览器**进行订阅的，**不支持在微信内置浏览器中订阅**。价格为 `20元/月` 一个月。
+    执行完后浏览器运行 `http://localhost:8000`
 
-<img width="1674" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/11354b1f-1550-4ebb-879a-a9252050d1ad">
-<img width="1676" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/2825f47e-65f4-46e8-a60f-2916c033d74f">
-<img width="1676" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/54a1435a-9610-48cc-b354-bd4b4d5d38e4">
-<img width="1675" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/48d6cf72-ab6e-49b9-96ff-fbb9e1ea09eb">
+### Docker 运行
 
-### 服务切换
+- 编辑修改 `docker-compose.yaml` 文件中的环境变量
+  ```yaml
+  version: "3"
+  services:
+    nginx:
+      image: nginx:latest
+      ports:
+        - "8000:8080"
+      volumes:
+        - ./nginx/fakeoai.conf:/etc/nginx/templates/fakeoai.conf.template
+      environment:
+        LICENSE: 你的API调用凭证
+        SECRET_KEY: fakeoai
+        MANAGER: FakeOAI
+        SOCIAL_LINK: https://github.com/FakeOAI/deploy
+        SECURE: false
+      restart: always
+    fakeoai:
+      build: .
+      environment:
+        FLASK_SECRET_KEY: Session信息密钥
+        FLASK_SESSION_COOKIE_SECURE: false
+        FLASK_LICENSE: 你的调用凭证
+        FLASK_MANAGER: FakeOAI
+        FLASK_SOCIAL_LINK: https://github.com/FakeOAI/deploy
+        FLASK_NAVIGATE_LINK_LABEL: About FakeOAI
+      restart: always
+  ```
+- 执行如下脚本
 
-当遇到服务不可用的情况，别着急，可以尝试点击左下方的头像进行服务的切换，免费用户只能使用免费服务，会员用户则可以使用**两种服务**。
+  ```sh
+  docker-compose up -d
+  ```
 
-![image](https://github.com/FakeOpenAI/proxy/assets/89441249/1df6dc3a-0b03-4a16-9638-a8c4f1e0192e)
+  执行完后浏览器运行 `http://localhost:8000`
 
-<img width="732" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/938d33b6-b134-4bba-b792-17b04b566d1a">
+## 接口服务
 
-## 常见问题
+> 代理域名：`https://api.fakeoai.com`
+>
+> 本代理服务除**License 服务**外，所有接口都需要在请求头 `X-License` 中携带调用凭证 `license_id`
+>
+> `license_id` 请在**微信公众服务号**【FakeOAI】的**菜单**中获取
+>
+> `*` 代表任意存在的接口**URL**
 
-### 服务是否稳定？
+### ChatGPT 官网接口代理
 
-这个服务是配备了专属的[服务监控](https://status.fakeopenai.cn)，以备大家对服务的可靠性有一定的了解。
+> 本代理服务除后缀为 `conversation` 的接口有使用限制外，其余接口均直接转发到官网
+>
+> 请求头 `Authorization` 可以传 `accessToken` 和 `fk-token`，传 `fk-token` 会自动处理用户层级的数据隔离
+>
+> 本代理服务已经对所有域名为 `https://files.oaiusercontent.com` 的图片以及文件转发到 `/files/*` 路径后
 
-<img width="1336" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/17442e74-9184-4509-996f-961e38946ad4">
+- `/backend-api/*`
+- `/public-api/*`
+- `/api/*`
 
-### `GPT4` 模型是不是有对话次数限制的？
+### OpenAI API 接口代理
 
-基于目前 gpt-4 的 bug 情况，我们对使用的**gpt-4 模型**进行了修改，现阶段是**无限制的使用**gpt-4 模型，如果官网维护了此 bug 可能就有所调整，但是 20 美刀换成 20 块人民币即可体验 GPT
-4，我已经帮你们把价格打下来了，至于你们是否上车，取决于你是否真的需要 `GPT4` 模型。
+> `chat2api` 接口coming soon...
 
-### 账号被封？
+- `/v1/*`
 
-一分钟请求超过 5 条有效成功对话请求的账号，我们会给予警告，24 小时之后此才会解除警告，如果在 24 小时之内再次超过 5 次有效成功对话请求，我们会毫不留情的直接给予账号永久封禁。不管你是不是 Plus 会员。公共服务请为他人着想。
+### Auth 服务接口
 
-<img width="570" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/fed2300c-9bdc-46cf-a1ca-5791769661c8">
+- `GET /auth/login`: 快捷获取accessToken
+- `POST /auth/login`: 官方登录接口
 
-<img width="375" alt="image" src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/0818d048-48ce-48c0-92cb-af638febe671">
+  - 请求类型：`application/x-www-form-urlencoded`
+  - 请求参数：
 
-<img width="1671" alt="image" src="https://github.com/FakeOpenAI/proxy/assets/89441249/eb21a272-28ba-4438-8069-55d5cabca924">
+    | 参数名称    | 类型   | 必填 | 描述        | 默认值 | 约束                   |
+    | ----------- | ------ | ---- | ----------- | ------ | ---------------------- |
+    | username    | string | 是   | OpenAI 账号 | -      | 非空                   |
+    | password    | string | 是   | OpenAI 密码 | -      | 非空                   |
+    | arkoseToken | string | 是   | arkoseToken | -      | 非空，放请求 cookie 中 |
+
+  - 请求示例：
+    ```sh
+    curl 'https://api.fakeoai.com/auth/login' \
+        -H 'Content-Type: application/x-www-form-urlencoded' \
+        -H 'Cookie: arkoseToken=xxxxxxxxx.xxxxxxxxx|r=us-east-1|meta=3|metabgclr=transparent|metaiconclr=%23757575|guitextcolor=%23000000|pk=0A1D34FC-659D-4E23-B17B-694DCFCF6A6C|at=40|sup=1|rid=8|ag=101|cdn_url=https%3A%2F%2Ftcr9i.openai.com%2Fcdn%2Ffc|lurl=https%3A%2F%2Faudio-us-east-1.arkoselabs.com|surl=https%3A%2F%2Ftcr9i.openai.com|smurl=https%3A%2F%2Ftcr9i.openai.com%2Fcdn%2Ffc%2Fassets%2Fstyle-manager' \
+        --data-raw 'username=xxxxx&password=xxxxx'
+    ```
+  - 返回结果：与 `https://chat.openai.com/api/auth/session` 保持一致
+
+- `GET /auth/session`: 使用 `session_token` 换取 `access_token` 以及账户信息
+  > `session_token` 请自行在浏览器的cookie中获取名为 `__Secure-next-auth.session-token` 的值
+  >
+  > `session_token` 一旦在网页中点击退出登录，就会请求官方退出登录的接口，随之 `session_token` 就会失效，所以想不失效又要退出重新登录的话，请直接清空cookie再登录，这样就可以跳过退出登录的官方接口请求
+  >
+  > 想要获取**永久**的 `access_token`, 请不断的使用接口返回新的 `sessionToken` 进行请求
+  - 请求示例：`/auth/session?session_token={session_token}`
+  - 返回结果：
+    
+    ```json
+    {
+      "user": {
+          "id": "user-xxxxxx",
+          "name": "xxxxxx",
+          "email": "xxxxxx",
+          "image": "xxxxxx",
+          "picture": "xxxxxx",
+          "idp": "xxxxxx",
+          "iat": "xxxxxx",
+          "mfa": false,
+          "groups": [],
+          "intercom_hash": "xxxxxx"
+      },
+      "expires": "xxxxxx",
+      "accessToken": "xxxxxx",
+      "authProvider": "auth0",
+      "sessionToken": "xxxxxx"
+    }
+    ```
+
+### Fk Token 服务接口
+
+> 本服务可以实现对话的历史记录、GPTs 的使用记录、个人创建的 GPTs、对话分享以及对话存档等信息的用户隔离
+>
+> 使用该 token 进行登录的账号无法进行**敏感操作**，例如注销账号、更改账号测试功能等操作
+
+- `GET /token`: 查询 token 信息
+
+  - 请求示例：`/token?token={fk-token}`
+  - 返回结果：
+
+    ```json
+    {
+      "token": "fk-xxxxxx",
+      "union_id": "xxxxxx",
+      "email": "yuanbao@fakeoai.com",
+      "name": "xxxxxx",
+      "expires_in": 1710424081,
+      "plus_expires_in": 0
+    }
+    ```
+
+- `POST /token`: 注册或更新 token
+
+  - 请求类型：`application/json`
+  - 请求参数：
+
+    | 参数名称        | 类型    | 必填 | 描述                                                                                                                                                      | 默认值             | 约束                        |
+    | --------------- | ------- | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | --------------------------- |
+    | union_id        | string  | 是   | token 唯一标识                                                                                                                                            | -                  | 非空                        |
+    | access_token    | string  | 是   | chatgpt 的 `access_token`                                                                                                                                 | -                  | 非空，要合法的 access_token |
+    | name            | string  | 否   | token 的名称，在镜像站对应用户的名称                                                                                                                      | token 的`union_id` | -                           |
+    | expires_in      | integer | 否   | token 过期时间，单位秒，值为 `0` 时则保持和 `access_token` 一样                                                                                           | 0                  | 大于等于 0                  |
+    | plus_expires_in | integer | 否   | 会员过期时间，单位秒，前提是 access_token 对应的账号为 plus 账号该值才会生效，值为 `0` 时则保持和当前账号一致的过期时间，值为 `-1` 时则禁用会员的所有功能 | 0                  | 大于等于-1                  |
+    | is_public_email | boolean | 否   | 是否公开账号的邮箱，默认为 `false`，邮箱默认值为：`yuanbao@fakeoai.com`                                                                                 | False              | -                           |
+
+  - 返回结果：
+
+    ```json
+    {
+      "token": "fk-xxxxxx",
+      "union_id": "xxxxxx",
+      "email": "yuanbao@fakeoai.com",
+      "name": "xxxxxx",
+      "expires_in": 1710424081,
+      "plus_expires_in": 0
+    }
+    ```
+
+- `DELETE /token`: 吊销 token
+
+  - 请求示例：`/token?token={fk-token}`
+  - 返回结果：
+
+    ```json
+    { "detail": "success" }
+    ```
+
+### License 服务接口
+
+- `GET /license/authorize/{license_id}`: 授权调用凭证
+
+  - 请求示例：`/license/authorize/{license_id}`
+  - 返回结果：
+
+    ```json
+    {
+        "message":"授权成功",
+        "authorize_ip": "xx.xx.xx.xx",
+        "usage": "xxxx"
+    }
+    ```
+
+- `GET /license/info/{license_id}`: 查询凭证信息
+
+  - 请求示例：`/license/info/{license_id}`
+  - 返回结果：
+
+    ```json
+    {
+        "authorize_ip": "xx.xx.xx.xx",
+        "usage": "xxxx"
+    }
+    ```
 
 ## 问题反馈
 
 这里是 TG 群聊和 QQ 群聊，在里面可以咨询任何使用过程中遇到的问题
 
-<img src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/ba8ce061-bbfa-4d73-bca5-d9b1f495155a" width="40%" />
-<img src="https://github.com/FakeOpenAI/FakeOpenAI/assets/89441249/45fb6fae-7da7-4248-ba2e-426475a2ab69" width="40%" />
+<img src="https://github.com/fakeoai/deploy/assets/89441249/ba8ce061-bbfa-4d73-bca5-d9b1f495155a" width="40%" />
+<img src="https://github.com/fakeoai/deploy/assets/89441249/45fb6fae-7da7-4248-ba2e-426475a2ab69" width="40%" />
 
 ## 贡献者们
 
 > 感谢这个项目的贡献者
-
-[![Contributors](https://contrib.rocks/image?repo=fakeopenai/fakeopenai)](https://github.com/fakeopenai/fakeopenai/graphs/contributors)
+>
+> [![Contributors](https://contrib.rocks/image?repo=fakeoai/deploy)](https://github.com/fakeoai/deploy/graphs/contributors)
+> 
+> 感谢 [xyhelper](https://github.com/xyhelper) 提供的 `arkoselabs` 免费的代理服务
 
 ## Star 历史
 
-![Star History Chart](https://api.star-history.com/svg?repos=fakeopenai/fakeopenai&type=Date)
+![Star History Chart](https://api.star-history.com/svg?repos=fakeoai/deploy&type=Date)
