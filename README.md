@@ -1,6 +1,7 @@
 # FakeOAI
 
-> [!IMPORTANT] > `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
+> [!IMPORTANT]
+> `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
 
 ## 镜像服务
 
