@@ -29,6 +29,13 @@
 curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 ```
 
+### 安装
+
+``` sh
+git clone https://github.com/FakeOAI/deploy.git
+pip3 install -r requirements.txt
+```
+
 ### 本地运行
 
 - 编辑修改 `.env` 环境变量文件
