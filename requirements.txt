@@ -1,5 +1,8 @@
-flask
-python-dotenv
-requests
-itsdangerous
+fastapi
+aiohttp
+uvicorn
 gunicorn
+python_multipart
+pydantic_settings
+starlette_session
+jinja2

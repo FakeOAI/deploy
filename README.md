@@ -1,7 +1,6 @@
 # FakeOAI
 
-> [!IMPORTANT]
-> `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
+> [!IMPORTANT] > `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
 
 ## 镜像服务
 
@@ -33,61 +32,26 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
 - 编辑修改 `.env` 环境变量文件
 
-  ```  
-  FLASK_SECRET_KEY=Session信息密钥
-  FLASK_SESSION_COOKIE_SECURE=是否开启cookie的secure模式
-  FLASK_LICENSE=你的调用凭证
-  FLASK_MANAGER=网站提供者
-  FLASK_SOCIAL_LINK=提供者的社交链接🔗
-  FLASK_NAVIGATE_LINK_LABEL=链接显示的文字
   ```
-
-- 配置 Nginx 代理
-
-  ```conf
-  server {
-      listen 8080;
-
-      # 镜像官网代理
-      location / {
-          proxy_pass http://localhost:8000;
-      }
-
-      # 文件图片资源代理
-      location /files {
-          proxy_ssl_server_name on;
-          proxy_ssl_session_reuse off;
-          rewrite ^/files(.*)$ /$1 break;
-          proxy_pass https://files.oaiusercontent.com;
-      }
-
-      # API服务代理
-      location ~ ^/(((backend|public)-(api|anon))|api|auth|css|js|fonts)/ {
-          rewrite ^/(.*)$ /$1 break;
-          proxy_ssl_server_name on;
-          proxy_ssl_session_reuse off;
-          proxy_pass https://api.fakeoai.com;
-          proxy_set_header X-License API调用凭证;
-          # proxy_set_header X-Secret-Key fakeoai;
-          # proxy_set_header X-Manager FakeOAI;
-          # proxy_set_header X-Social-Link https://github.com/FakeOAI/deploy;
-          # proxy_set_header X-Secure false;
-      }
-  }
+  LICENSE=你的调用凭证
+  WEBUI=是否开启镜像网页
+  MANAGER=网站提供者
+  SOCIAL_LINK=提供者的社交链接🔗
+  NAVIGATE_LINK_LABEL=链接显示的文字
   ```
 
 - 启动
 
-  - 以 `python` 脚本启动, 默认 8000 端口
+  - 以 `python` 脚本启动, 可以使用 `gunicorn` 的所有命令行参数启动
 
     ```sh
-    python3 launch.py
+    python3 server.py -b 8000
     ```
 
-  - 以 `gunicorn` 服务器启动
+  - 以 `uvicorn` 服务器启动
 
     ```sh
-    gunicorn launch:app
+    uvicorn launch:app --reload
     ```
 
     执行完后浏览器运行 `http://localhost:8000`
@@ -98,28 +62,14 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
   ```yaml
   version: "3"
   services:
-    nginx:
-      image: nginx:latest
-      ports:
-        - "8000:8080"
-      volumes:
-        - ./nginx/fakeoai.conf:/etc/nginx/templates/fakeoai.conf.template
-      environment:
-        LICENSE: 你的API调用凭证
-        SECRET_KEY: fakeoai
-        MANAGER: FakeOAI
-        SOCIAL_LINK: https://github.com/FakeOAI/deploy
-        SECURE: false
-      restart: always
     fakeoai:
       build: .
       environment:
-        FLASK_SECRET_KEY: Session信息密钥
-        FLASK_SESSION_COOKIE_SECURE: false
-        FLASK_LICENSE: 你的调用凭证
-        FLASK_MANAGER: FakeOAI
-        FLASK_SOCIAL_LINK: https://github.com/FakeOAI/deploy
-        FLASK_NAVIGATE_LINK_LABEL: About FakeOAI
+        LICENSE: 你的调用凭证
+        WEBUI: true
+        MANAGER: FakeOAI
+        SOCIAL_LINK: https://github.com/FakeOAI/deploy
+        NAVIGATE_LINK_LABEL: About FakeOAI
       restart: always
   ```
 - 执行如下脚本
@@ -154,13 +104,13 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
 ### OpenAI API 接口代理
 
-> `chat2api` 接口coming soon...
+> `chat2api` 接口 coming soon...
 
 - `/v1/*`
 
 ### Auth 服务接口
 
-- `GET /auth/login`: 快捷获取accessToken
+- `GET /auth/login`: 快捷获取 accessToken
 - `POST /auth/login`: 官方登录接口
 
   - 请求类型：`application/x-www-form-urlencoded`
@@ -182,27 +132,29 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
   - 返回结果：与 `https://chat.openai.com/api/auth/session` 保持一致
 
 - `GET /auth/session`: 使用 `session_token` 换取 `access_token` 以及账户信息
-  > `session_token` 请自行在浏览器的cookie中获取名为 `__Secure-next-auth.session-token` 的值
+
+  > `session_token` 请自行在浏览器的 cookie 中获取名为 `__Secure-next-auth.session-token` 的值
   >
-  > `session_token` 一旦在网页中点击退出登录，就会请求官方退出登录的接口，随之 `session_token` 就会失效，所以想不失效又要退出重新登录的话，请直接清空cookie再登录，这样就可以跳过退出登录的官方接口请求
+  > `session_token` 一旦在网页中点击退出登录，就会请求官方退出登录的接口，随之 `session_token` 就会失效，所以想不失效又要退出重新登录的话，请直接清空 cookie 再登录，这样就可以跳过退出登录的官方接口请求
   >
   > 想要获取**永久**的 `access_token`, 请不断的使用接口返回新的 `sessionToken` 进行请求
+
   - 请求示例：`/auth/session?session_token={session_token}`
   - 返回结果：
-    
+
     ```json
     {
       "user": {
-          "id": "user-xxxxxx",
-          "name": "xxxxxx",
-          "email": "xxxxxx",
-          "image": "xxxxxx",
-          "picture": "xxxxxx",
-          "idp": "xxxxxx",
-          "iat": "xxxxxx",
-          "mfa": false,
-          "groups": [],
-          "intercom_hash": "xxxxxx"
+        "id": "user-xxxxxx",
+        "name": "xxxxxx",
+        "email": "xxxxxx",
+        "image": "xxxxxx",
+        "picture": "xxxxxx",
+        "idp": "xxxxxx",
+        "iat": "xxxxxx",
+        "mfa": false,
+        "groups": [],
+        "intercom_hash": "xxxxxx"
       },
       "expires": "xxxxxx",
       "accessToken": "xxxxxx",
@@ -245,7 +197,7 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
     | name            | string  | 否   | token 的名称，在镜像站对应用户的名称                                                                                                                      | token 的`union_id` | -                           |
     | expires_in      | integer | 否   | token 过期时间，单位秒，值为 `0` 时则保持和 `access_token` 一样                                                                                           | 0                  | 大于等于 0                  |
     | plus_expires_in | integer | 否   | 会员过期时间，单位秒，前提是 access_token 对应的账号为 plus 账号该值才会生效，值为 `0` 时则保持和当前账号一致的过期时间，值为 `-1` 时则禁用会员的所有功能 | 0                  | 大于等于-1                  |
-    | is_public_email | boolean | 否   | 是否公开账号的邮箱，默认为 `false`，邮箱默认值为：`yuanbao@fakeoai.com`                                                                                 | False              | -                           |
+    | is_public_email | boolean | 否   | 是否公开账号的邮箱，默认为 `false`，邮箱默认值为：`yuanbao@fakeoai.com`                                                                                   | False              | -                           |
 
   - 返回结果：
 
@@ -278,9 +230,9 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
     ```json
     {
-        "message":"授权成功",
-        "authorize_ip": "xx.xx.xx.xx",
-        "usage": "xxxx"
+      "message": "授权成功",
+      "authorize_ip": "xx.xx.xx.xx",
+      "usage": "xxxx"
     }
     ```
 
@@ -291,8 +243,8 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
     ```json
     {
-        "authorize_ip": "xx.xx.xx.xx",
-        "usage": "xxxx"
+      "authorize_ip": "xx.xx.xx.xx",
+      "usage": "xxxx"
     }
     ```
 
@@ -309,7 +261,7 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 > 感谢这个项目的贡献者
 >
 > ![contrib](https://contrib.rocks/image?repo=fakeoai/deploy)
-> 
+>
 > 感谢 [xyhelper](https://github.com/xyhelper) 提供的 `arkoselabs` 免费的代理服务
 
 ## Star 历史

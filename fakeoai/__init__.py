@@ -1,1 +1,2 @@
-from .server import FakeOAI as FakeOAI
+from .app import FakeOAPI as FakeOAPI
+from .settings import c as c

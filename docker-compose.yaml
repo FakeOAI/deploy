@@ -1,26 +1,14 @@
 version: '3'
 
 services:
-  nginx:
-    image: nginx:latest
-    ports:
-      - "8000:8080"
-    volumes:
-      - ./nginx/fakeoai.conf:/etc/nginx/templates/fakeoai.conf.template
-    environment:
-      LICENSE: 你的凭证
-      SECRET_KEY: fakeoai
-      MANAGER: FakeOAI
-      SOCIAL_LINK: https://github.com/FakeOAI/deploy
-      SECURE: false
-    restart: always
   fakeoai:
     build: .
+    ports:
+      - "8000:8000"
     environment:
-      FLASK_SECRET_KEY: fakeoai
-      FLASK_SESSION_COOKIE_SECURE: false
-      FLASK_LICENSE: 你的凭证
-      FLASK_MANAGER: FakeOAI
-      FLASK_SOCIAL_LINK: https://github.com/FakeOAI/deploy
-      FLASK_NAVIGATE_LINK_LABEL: About FakeOAI
+      LICENSE: 你的调用凭证
+      WEBUI: true
+      MANAGER: FakeOAI
+      SOCIAL_LINK: https://github.com/FakeOAI/deploy
+      NAVIGATE_LINK_LABEL: About FakeOAI
     restart: always

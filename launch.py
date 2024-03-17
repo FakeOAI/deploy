@@ -1,6 +1,3 @@
-from fakeoai import FakeOAI
+from fakeoai import FakeOAPI
 
-app = FakeOAI()
-
-if __name__ == '__main__':
-    app.run(port=8000)
+app = FakeOAPI()
