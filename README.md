@@ -31,6 +31,8 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
 ### 安装
 
+> 确保至少 `python>=3.7` 以上的环境
+
 ``` sh
 git clone https://github.com/FakeOAI/deploy.git
 pip3 install -r requirements.txt
