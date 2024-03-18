@@ -55,7 +55,7 @@ pip3 install -r requirements.txt
   - 以 `python` 脚本启动, 可以使用 `gunicorn` 的所有命令行参数启动
 
     ```sh
-    python3 server.py -b 8000
+    python3 server.py
     ```
 
   - 以 `uvicorn` 服务器启动
