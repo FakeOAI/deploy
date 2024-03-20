@@ -1,6 +1,7 @@
 # FakeOAI
 
-> [!IMPORTANT] > `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
+> [!IMPORTANT]
+> `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
 
 ## 镜像服务
 
@@ -105,7 +106,7 @@ pip3 install -r requirements.txt
 >
 > 请求头 `Authorization` 可以传 `accessToken` 和 `fk-token`，传 `fk-token` 会自动处理用户层级的数据隔离
 >
-> 本代理服务已经对所有域名为 `https://files.oaiusercontent.com` 的图片以及文件转发到 `/files/*` 路径后
+> 需要代理文件图片域名地址 `https://files.oaiusercontent.com`，请修改请求头【X-File-Proxy】的值，默认为 `https://files.oaiusercontent.com`, 本服务会进行请求体以及响应体中相关域名的替换, **镜像站**请修改环境变量【FILE_PROXY】的值
 
 - `/backend-api/*`
 - `/public-api/*`
@@ -203,6 +204,7 @@ pip3 install -r requirements.txt
     | --------------- | ------- | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ | --------------------------- |
     | union_id        | string  | 是   | token 唯一标识                                                                                                                                            | -                  | 非空                        |
     | access_token    | string  | 是   | chatgpt 的 `access_token`                                                                                                                                 | -                  | 非空，要合法的 access_token |
+    | license_id      | string  | 是   | 公众号获取的调用凭证                                                                                                                                          | -                 | 非空 |
     | name            | string  | 否   | token 的名称，在镜像站对应用户的名称                                                                                                                      | token 的`union_id` | -                           |
     | expires_in      | integer | 否   | token 过期时间，单位秒，值为 `0` 时则保持和 `access_token` 一样                                                                                           | 0                  | 大于等于 0                  |
     | plus_expires_in | integer | 否   | 会员过期时间，单位秒，前提是 access_token 对应的账号为 plus 账号该值才会生效，值为 `0` 时则保持和当前账号一致的过期时间，值为 `-1` 时则禁用会员的所有功能 | 0                  | 大于等于-1                  |
