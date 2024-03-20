@@ -44,6 +44,7 @@ pip3 install -r requirements.txt
   ```
   LICENSE=你的调用凭证
   MANAGER=网站提供者
+  FILE_PROXY=图片文件代理地址
   SOCIAL_LINK=提供者的社交链接🔗
   NAVIGATE_LINK_LABEL=链接显示的文字
   ```
@@ -75,6 +76,7 @@ pip3 install -r requirements.txt
       environment:
         LICENSE: 你的调用凭证
         MANAGER: FakeOAI
+        FILE_PROXY: https://files.oaiusercontent.com
         SOCIAL_LINK: https://github.com/FakeOAI/deploy
         NAVIGATE_LINK_LABEL: About FakeOAI
       restart: always

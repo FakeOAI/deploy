@@ -8,6 +8,7 @@ services:
     environment:
       LICENSE: 你的调用凭证
       MANAGER: FakeOAI
+      FILE_PROXY: https://files.oaiusercontent.com
       SOCIAL_LINK: https://github.com/FakeOAI/deploy
       NAVIGATE_LINK_LABEL: About FakeOAI
     restart: always
