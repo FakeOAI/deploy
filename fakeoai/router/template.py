@@ -29,15 +29,20 @@ async def auth(request: Request):
 @template_router.post('/auth/login', name="auth_login") 
 async def auth(request: Request):
     response = await normal_proxy(request)
-    json_data = json.loads(response.body)
     if response.status_code == 200:
+        json_data = json.loads(response.body)
         request.session.update(json_data)
         request.state.max_age = json_data['expires'] - int(time.time())
         request.state.permanent = True
         return RedirectResponse(request.url_for('index'), 302)
     else:
+        try:
+            json_data = json.loads(response.body)
+            error = json_data['detail']
+        except Exception as e:
+            error = str(e)
         return templates.TemplateResponse(request, 'auth.html', {
-            'error': json_data['detail'],
+            'error': error,
             'manager': c.manager, 
             'social_link': c.social_link, 
         })
@@ -59,6 +64,10 @@ async def token_login(request: Request, token: str):
 def logout(request: Request):
     request.session.clear()
     return RedirectResponse(request.url_for('login'))
+
+@template_router.get('/api/auth/session')
+async def auth_session(request: Request):
+    return { key: value for key, value in request.session.items()}
 
 @template_router.get('/')
 async def index(request: Request):

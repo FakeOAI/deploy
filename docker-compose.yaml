@@ -7,7 +7,6 @@ services:
       - "8000:8000"
     environment:
       LICENSE: 你的调用凭证
-      WEBUI: true
       MANAGER: FakeOAI
       SOCIAL_LINK: https://github.com/FakeOAI/deploy
       NAVIGATE_LINK_LABEL: About FakeOAI

@@ -1,7 +1,6 @@
 # FakeOAI
 
-> [!IMPORTANT]
-> `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
+> [!IMPORTANT] > `FakeOAI` 是一个可以让你本地化部署属于你自己的 ChatGPT 官网镜像服务，并且保持与官网一样的体验。
 
 ## 镜像服务
 
@@ -33,7 +32,7 @@ curl https://api.fakeoai.com/license/authorize/{公众服务号获取的凭证}
 
 > 确保至少 `python>=3.7` 以上的环境
 
-``` sh
+```sh
 git clone https://github.com/FakeOAI/deploy.git
 pip3 install -r requirements.txt
 ```
@@ -44,7 +43,6 @@ pip3 install -r requirements.txt
 
   ```
   LICENSE=你的调用凭证
-  WEBUI=是否开启镜像网页
   MANAGER=网站提供者
   SOCIAL_LINK=提供者的社交链接🔗
   NAVIGATE_LINK_LABEL=链接显示的文字
@@ -52,10 +50,10 @@ pip3 install -r requirements.txt
 
 - 启动
 
-  - 以 `python` 脚本启动, 可以使用 `gunicorn` 的所有命令行参数启动
+  - 以 `python` 脚本启动
 
     ```sh
-    python3 server.py
+    python3 launch.py
     ```
 
   - 以 `uvicorn` 服务器启动
@@ -76,7 +74,6 @@ pip3 install -r requirements.txt
       build: .
       environment:
         LICENSE: 你的调用凭证
-        WEBUI: true
         MANAGER: FakeOAI
         SOCIAL_LINK: https://github.com/FakeOAI/deploy
         NAVIGATE_LINK_LABEL: About FakeOAI
@@ -241,8 +238,7 @@ pip3 install -r requirements.txt
     ```json
     {
       "message": "授权成功",
-      "authorize_ip": "xx.xx.xx.xx",
-      "usage": "xxxx"
+      "authorize_ip": "xx.xx.xx.xx"
     }
     ```
 

@@ -2,7 +2,6 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     license: str
-    webui: bool = False
     build_id: str = 'ZMiYPqm_nspElF2_Wn0k-'
     secret_key: str = 'fakeoai'
     cookie_name: str = 'next-auth.session-token'
