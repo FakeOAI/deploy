@@ -46,20 +46,7 @@ async def auth(request: Request):
             'manager': c.manager, 
             'social_link': c.social_link, 
         })
-    
-@template_router.get('/auth/token_login') 
-async def token_login(request: Request, token: str):
-    response = await normal_proxy(request)
-    json_data = json.loads(response.body)
-    if response.status_code == 200:
-        request.session.update(json_data)
-        request.state.max_age = json_data['expires'] - int(time.time())
-        request.state.permanent = True
-        return {'detail':'success'}
-    else:
-        return response
         
-
 @template_router.get('/auth/logout')
 def logout(request: Request):
     request.session.clear()
